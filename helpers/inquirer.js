@@ -17,37 +17,37 @@ const menuOpts = [
     choices: [
       {
         value: '1',
-        name: '1. Add a Task'
+        name: `${'1.'.red} Add a Task`
       }
       ,
       {
         value: '2',
-        name: '2. List Tasks'
+        name: `${'2.'.red} List Tasks`
       }
       ,
       {
         value: '3',
-        name: '3. List Completed Tasks'
+        name: `${'3.'.red} List Completed Tasks`
       }
       ,
       {
         value: '4',
-        name: '4. List Incompleted Tasks'
+        name: `${'4.'.red} List Incompleted Tasks`
       }
       ,
       {
         value: '5',
-        name: '5. Finish a Task'
+        name: `${'5.'.red} Finish a Task`
       }
       ,
       {
         value: '6',
-        name: '6. Delete a Task'
+        name: `${'6.'.red} Delete a Task`
       }
       ,
       {
         value: '0',
-        name: '7. Exit'
+        name: `${'7.'.cyan} Exit`
       }
     ]
   }
@@ -56,7 +56,7 @@ const menuOpts = [
 const inquirerMenu = async () => {
   console.clear();
   console.log('*****************************'.green);
-  console.log('Select an option:');
+  console.log('Select an option:'.white);
   console.log('*****************************\n'.green);
   const {option} = await inquirer.prompt(menuOpts)
   return option
@@ -67,7 +67,27 @@ const pause = async() => {
   return wait 
 }
 
+const readInput = async (message = '') => {
+  const input = [
+    {
+      type: 'input',
+      name: 'description',
+      message,
+      validate(value) {
+        if (value.length) {
+          return true
+        } else {
+          return 'Please enter a value'
+        }
+      }
+    }
+  ]
+  const {description} = await inquirer.prompt(input)
+  return description
+}
+
 module.exports = {
   inquirerMenu,
-  pause
+  pause,
+  readInput
 }
